@@ -39,6 +39,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -86,7 +87,9 @@ public class second extends JPanel implements ActionListener, KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (gameStatus == 0) {
-            ImageIcon i = new ImageIcon("C:\\Users\\ANNIA GONZALEZ\\Documents\\GitHub\\Pacman\\Pacman\\src\\resources\\fondo3.jpg");
+            File f=new File(".");
+            String dir=f.getAbsolutePath();
+            ImageIcon i = new ImageIcon(dir+"\\src\\resources\\fondo3.jpg");
             i.paintIcon(this, g, 0, 0);
             g.setFont(new Font("Arial", 1, 40));
             g.setColor(Color.WHITE);
