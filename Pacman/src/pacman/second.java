@@ -48,7 +48,7 @@ import javax.swing.JFrame;
 public class second extends JPanel implements ActionListener, KeyListener {
 
     Timer t = new Timer(5, this);
-    double x = 0, y = 0, velx = 0, vely = 0;
+    double x = 615, y = 465, velx = 0, vely = 0;
     int code = 39;//por default a la derecha
     int cont = 0;
     int gameStatus = 0;
