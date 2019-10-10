@@ -108,7 +108,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
                 }
             }
             g2.setColor(Color.YELLOW);
-            g2.fill(new Arc2D.Double(x, y, 40, 40, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
+            g2.fill(new Arc2D.Double(x, y, 23, 23, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
             cont++;
         }
     }
@@ -120,23 +120,23 @@ public class second extends JPanel implements ActionListener, KeyListener {
     }
 
     public void up() {
-        vely = -1.5;
+        vely = -1;
         velx = 0;
     }
 
     public void down() {
-        vely = 1.5;
+        vely = 1;
         velx = 0;
     }
 
     public void left() {
-        velx = -1.5;
+        velx = -1;
 
         vely = 0;
     }
 
     public void right() {
-        velx = 1.5;
+        velx = 1;
         vely = 0;
     }
 
