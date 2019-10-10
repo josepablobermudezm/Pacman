@@ -51,12 +51,12 @@ import javax.swing.JFrame;
 public class second extends JPanel implements ActionListener, KeyListener {
 
     Timer t = new Timer(5, this);
-    double x = 434, y = 392, velx = 0, vely = 0;
+    double x = 434, y = 394, velx = 0, vely = 0;
     int code = 39;//por default a la derecha
     int cont = 0;
     int gameStatus = 0;
     int xAux = 434;
-    int yAux = 392;
+    int yAux = 394;
     int jAux = 14;
     int iAux = 14;
     boolean up = false, down = false, left = false, right = false;
@@ -116,7 +116,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
                         case 'X':
                             //pared
                             //System.out.print("X");
-                            g2.setColor(new Color(44, 51, 132));
+                            g2.setColor(new Color(46, 55, 130));
                             g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
                             break;
                         case '@':
@@ -146,6 +146,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
         //reviza que si hay un campo al frente, atras, derecha o a la izquierda y ese campo es X, osea una pared. En el caso que pase eso y no se este yendo en 
