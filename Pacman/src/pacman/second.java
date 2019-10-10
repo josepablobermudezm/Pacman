@@ -59,7 +59,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
     int yAux = 392;
     int jAux = 14;
     int iAux = 14;
-    boolean up=false,down=false,left=false,right=false;
+    boolean up = false, down = false, left = false, right = false;
 
     public second() {
         //inicializa los listener
@@ -80,10 +80,10 @@ public class second extends JPanel implements ActionListener, KeyListener {
             {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+            {' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '},
+            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
@@ -92,6 +92,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
 
+    //Los asteriscos son para que no aparezcan puntos dentro de la casa de los fantasmas
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //GameStatus es como para saber en que pantalla se está
@@ -107,28 +108,32 @@ public class second extends JPanel implements ActionListener, KeyListener {
         if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(Color.BLACK);
-            g2.fill(new Rectangle(0, 0, 900, 600));//fondo
+            g2.fill(new Rectangle(0, 0, 900, 645));//fondo
+            //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
                     if (Mapa[i][j] == 'X') {//pared
-                        System.out.print("X");
+                        //System.out.print("X");
                         g2.setColor(new Color(46, 55, 130));
                         g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                    }else if (Mapa[i][j] == '@') {//pacman
-                        System.out.print("@");
+                    } else if (Mapa[i][j] == '@') {//pacman
+                        //System.out.print("@");
                         g2.setColor(Color.YELLOW);
                         g2.fill(new Arc2D.Double(x, y, 23, 23, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
                         //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
-                    }else {//espacio en blanco
+                    } else if (Mapa[i][j] == ' ') {//espacio en blanco
                         g2.setColor(Color.WHITE);
-                        g2.fillOval(j*31+10, i*29+5, 4, 4);
+                        g2.fillOval(j * 31 + 10, i * 29 + 5, 4, 4);
                         //Aquí están los puntos para comerse, hay que ver como acomodarlos,
-                        System.out.print(" ");
+                        //System.out.print(" ");
                     }
                 }
-                System.out.print("\n");
+                //System.out.print("\n");
             }
-            System.out.println();
+            //System.out.println();
+            g.setFont(new Font("Showcard Gothic", 1, 20));
+            g.setColor(Color.WHITE);
+            g.drawString("Puntos: " + cont*10, 0, 585);
         }
     }
 
@@ -136,41 +141,54 @@ public class second extends JPanel implements ActionListener, KeyListener {
         repaint();
         //reviza que si hay un campo al frente, atras, derecha o a la izquierda y ese campo es X, osea una pared. En el caso que pase eso y no se este yendo en 
         //esa dirección aumenta sin ningún problema
-        if ((Mapa[iAux][jAux + 1] != 'X' && right) || (Mapa[iAux][jAux-1] != 'X' && left) || (Mapa[iAux+1][jAux] != 'X' && down) || (Mapa[iAux-1][jAux] != 'X' && up)) {
+        if ((Mapa[iAux][jAux + 1] != 'X' && right) || (Mapa[iAux][jAux - 1] != 'X' && left) || (Mapa[iAux + 1][jAux] != 'X' && down) || (Mapa[iAux - 1][jAux] != 'X' && up)) {
             x += velx;
             y += vely;
-        }else{
+        } else {
             //está tratando de ir contra una pared
         }
         //iAux y jAux, empiezan en 14, que es la posición del pacman en la matriz,
         //la resta y suma de 31 y 28 y por el tamaño de los rectangulos en el mapa
-        
+
         //Si la posición del pacman es 31/28 pixeles(un rectangulo) menos/mas que la posición que tenía anterior lo muevo en la matriz, después actualizo la posición
         if (x == xAux - 31) {
+            if (Mapa[iAux][jAux - 1] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+                cont++;
+            }
             Mapa[iAux][jAux - 1] = '@';
-            Mapa[iAux][jAux] = ' ';
+            Mapa[iAux][jAux] = '.';//Poniendo un punto después de que el pacman haya estado en ese lugar hace no se vayan a repintar los puntos
             jAux--;
             xAux = xAux - 31;
         }
         if (x == xAux + 31) {
+            if (Mapa[iAux][jAux + 1] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+                cont++;
+            }
             Mapa[iAux][jAux + 1] = '@';
-            Mapa[iAux][jAux] = ' ';
+            Mapa[iAux][jAux] = '.';
             jAux++;
             xAux = xAux + 31;
         }
         if (y == yAux - 28) {
+            if (Mapa[iAux-1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+                cont++;
+            }
             Mapa[iAux - 1][jAux] = '@';
-            Mapa[iAux][jAux] = ' ';
+            Mapa[iAux][jAux] = '.';
             iAux--;
             yAux = yAux - 28;
         }
         if (y == yAux + 28) {
+            if (Mapa[iAux+1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+                cont++;
+            }
             Mapa[iAux + 1][jAux] = '@';
-            Mapa[iAux][jAux] = ' ';
+            Mapa[iAux][jAux] = '.';
             iAux++;
             yAux = yAux + 28;
         }
     }
+
     ///La velocidad a la que se mueve el pacman por cada "frame"
     public void up() {
         vely = -1;
@@ -198,25 +216,25 @@ public class second extends JPanel implements ActionListener, KeyListener {
         if (code == KeyEvent.VK_UP) {
             up = true;
             up();
-        }else{
+        } else {
             up = false;
         }
         if (code == KeyEvent.VK_DOWN) {
             down = true;
             down();
-        }else{
+        } else {
             down = false;
         }
         if (code == KeyEvent.VK_RIGHT) {
             right = true;
             right();
-        }else{
+        } else {
             right = false;
         }
         if (code == KeyEvent.VK_LEFT) {
             left = true;
             left();
-        }else{
+        } else {
             left = false;
         }
         if (code == KeyEvent.VK_SPACE) {
