@@ -19,7 +19,7 @@ public class Pacman {
         f.add(s);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(800, 600);
+        f.setSize(1280, 900);
     }
     
 }
