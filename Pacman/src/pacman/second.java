@@ -103,7 +103,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             i.paintIcon(this, g, 0, 0);
             g.setFont(new Font("Arial", 1, 40));
             g.setColor(Color.WHITE);
-            g.drawString("Presione espacio para continuar", 170, 550);
+            g.drawString("Presione espacio para continuar", 170, 590);
         }
         if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
             Graphics2D g2 = (Graphics2D) g;
