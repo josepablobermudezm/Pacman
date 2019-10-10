@@ -93,7 +93,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             i.paintIcon(this, g, 0, 0);
             g.setFont(new Font("Arial", 1, 40));
             g.setColor(Color.WHITE);
-            g.drawString("Press Space to Play", 500, 830);
+            g.drawString("Press Space to Play", 270, 550);
         }
         if (gameStatus == 1) {
             Graphics2D g2 = (Graphics2D) g;
