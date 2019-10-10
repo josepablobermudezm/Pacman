@@ -114,14 +114,15 @@ public class second extends JPanel implements ActionListener, KeyListener {
                         System.out.print("X");
                         g2.setColor(new Color(46, 55, 130));
                         g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                    }
-                    if (Mapa[i][j] == '@') {//pacman
+                    }else if (Mapa[i][j] == '@') {//pacman
                         System.out.print("@");
                         g2.setColor(Color.YELLOW);
                         g2.fill(new Arc2D.Double(x, y, 23, 23, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
                         //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
-                    }
-                    if (Mapa[i][j] == ' ') {//espacio en blanco
+                    }else {//espacio en blanco
+                        g2.setColor(Color.WHITE);
+                        g2.fillOval(j*31+10, i*29+5, 4, 4);
+                        //Aquí están los puntos para comerse, hay que ver como acomodarlos,
                         System.out.print(" ");
                     }
                 }
