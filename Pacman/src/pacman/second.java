@@ -98,12 +98,12 @@ public class second extends JPanel implements ActionListener, KeyListener {
         if (gameStatus == 1) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(Color.BLACK);
-            g2.fill(new Rectangle(0, 0, 1280, 850));
+            g2.fill(new Rectangle(0, 0, 900, 600));
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
                     if (Mapa[i][j] == 'X') {
                         g2.setColor(new Color(46,55,130));
-                        g2.fillRect(j * 44, i * 42, 44, 42);
+                        g2.fillRect(j * 31, i * 28, 31, 28);
                     }
                 }
             }
