@@ -54,12 +54,12 @@ import javax.swing.JFrame;
 public class second extends JPanel implements ActionListener, KeyListener, MouseListener {
 
     Timer t = new Timer(5, this);
-    double x = 434, y = 392, velx = 0, vely = 0;
+    double x = 434, y = 394, velx = 0, vely = 0;
     int code = 39;//por default a la derecha
     int cont = 0;
     int gameStatus = 0;
     int xAux = 434;
-    int yAux = 392;
+    int yAux = 394;
     int jAux = 14;
     int iAux = 14;
     int aux = 0;
@@ -124,34 +124,44 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
-                    if (Mapa[i][j] == 'X') {//pared
-                        //System.out.print("X");
-                        g2.setColor(new Color(46, 55, 130));
-                        g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                    } else if (Mapa[i][j] == '@') {//pacman
-                        //System.out.print("@");
-                        g2.setColor(Color.YELLOW);
-                        g2.fill(new Arc2D.Double(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE));
-                        //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
-                    } else if (Mapa[i][j] == ' ') {//espacio en blanco
-                        g2.setColor(Color.WHITE);
-                        g2.fillOval(j * 31 + 10, i * 29 + 5, 4, 4);
-                        //Aquí están los puntos para comerse, hay que ver como acomodarlos,
-                        //System.out.print(" ");
-                    }
+                        switch (Mapa[i][j]) {
+                            case 'X':
+                                //pared
+                                //System.out.print("X");
+                                g2.setColor(new Color(46, 55, 130));
+                                g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
+                                break;
+                            case '@':
+                                //pacman
+                                //System.out.print("@");
+                                g2.setColor(Color.YELLOW);
+                                g2.fill(new Arc2D.Double(x, y, 23, 23, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
+                                //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
+                                break;
+                            case ' ':
+                                //espacio en blanco
+                                g2.setColor(Color.yellow);
+                                g2.fillOval(j * 31 + 10, i * 29, 4, 4);
+                                //Aquí están los puntos para comerse, hay que ver como acomodarlos,
+                                //System.out.print(" ");
+                                break;
+                            default:
+                                break;
+                        }
+                    //System.out.print("\n");
                 }
-                //System.out.print("\n");
+                int x = (int) MouseX;
+                int y = (int) MouseY;
+                g2.fillOval(MouseX, MouseY, 5, 5);
+                //System.out.println();
+                g.setFont(new Font("Showcard Gothic", 1, 20));
+                g.setColor(Color.WHITE);
+                g.drawString("Puntos: " + cont * 10, 0, 585);
             }
-            int x = (int) MouseX;
-            int y = (int) MouseY;
-            g2.fillOval(MouseX, MouseY, 5, 5);
-            //System.out.println();
-            g.setFont(new Font("Showcard Gothic", 1, 20));
-            g.setColor(Color.WHITE);
-            g.drawString("Puntos: " + cont * 10, 0, 585);
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
         //reviza que si hay un campo al frente, atras, derecha o a la izquierda y ese campo es X, osea una pared. En el caso que pase eso y no se este yendo en 
@@ -206,22 +216,22 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     ///La velocidad a la que se mueve el pacman por cada "frame"
     public void up() {
-        vely = -1;
+        vely = -0.5;
         velx = 0;
     }
 
     public void down() {
-        vely = 1;
+        vely = 0.5;
         velx = 0;
     }
 
     public void left() {
-        velx = -1;
+        velx = -0.5;
         vely = 0;
     }
 
     public void right() {
-        velx = 1;
+        velx = 0.5;
         vely = 0;
     }
 
