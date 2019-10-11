@@ -30,12 +30,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
@@ -48,7 +51,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
-public class second extends JPanel implements ActionListener, KeyListener {
+public class second extends JPanel implements ActionListener, KeyListener, MouseListener {
 
     Timer t = new Timer(5, this);
     double x = 434, y = 392, velx = 0, vely = 0;
@@ -59,6 +62,10 @@ public class second extends JPanel implements ActionListener, KeyListener {
     int yAux = 392;
     int jAux = 14;
     int iAux = 14;
+    int aux = 0;
+    int aux2 = 0;
+    int MouseX = 0;
+    int MouseY = 0;
     boolean up = false, down = false, left = false, right = false;
 
     public second() {
@@ -68,29 +75,34 @@ public class second extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
+        addMouseListener(this);
     }
 
     char Mapa[][]
-            = {{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
-            {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
+            = {
+                {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'X'},
+                {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
+                {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}
+
+            };
+    Graphics2D g2;
 
     //Los asteriscos son para que no aparezcan puntos dentro de la casa de los fantasmas
     public void paintComponent(Graphics g) {
@@ -106,7 +118,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             g.drawString("Presione espacio para continuar", 170, 590);
         }
         if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
-            Graphics2D g2 = (Graphics2D) g;
+            g2 = (Graphics2D) g;
             g2.setColor(Color.BLACK);
             g2.fill(new Rectangle(0, 0, 900, 645));//fondo
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
@@ -119,7 +131,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
                     } else if (Mapa[i][j] == '@') {//pacman
                         //System.out.print("@");
                         g2.setColor(Color.YELLOW);
-                        g2.fill(new Arc2D.Double(x, y, 23, 23, (code == 39) ? 30 : (code == 37) ? 210 : (code == 38) ? 120 : 300, 300, Arc2D.PIE));
+                        g2.fill(new Arc2D.Double(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE));
                         //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
                     } else if (Mapa[i][j] == ' ') {//espacio en blanco
                         g2.setColor(Color.WHITE);
@@ -130,10 +142,13 @@ public class second extends JPanel implements ActionListener, KeyListener {
                 }
                 //System.out.print("\n");
             }
+            int x = (int) MouseX;
+            int y = (int) MouseY;
+            g2.fillOval(MouseX, MouseY, 5, 5);
             //System.out.println();
             g.setFont(new Font("Showcard Gothic", 1, 20));
             g.setColor(Color.WHITE);
-            g.drawString("Puntos: " + cont*10, 0, 585);
+            g.drawString("Puntos: " + cont * 10, 0, 585);
         }
     }
 
@@ -170,7 +185,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             xAux = xAux + 31;
         }
         if (y == yAux - 28) {
-            if (Mapa[iAux-1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+            if (Mapa[iAux - 1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
                 cont++;
             }
             Mapa[iAux - 1][jAux] = '@';
@@ -179,7 +194,7 @@ public class second extends JPanel implements ActionListener, KeyListener {
             yAux = yAux - 28;
         }
         if (y == yAux + 28) {
-            if (Mapa[iAux+1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
+            if (Mapa[iAux + 1][jAux] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
                 cont++;
             }
             Mapa[iAux + 1][jAux] = '@';
@@ -214,24 +229,58 @@ public class second extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         code = e.getKeyCode();
         if (code == KeyEvent.VK_UP) {
+            aux = code;
             up = true;
             up();
         } else {
             up = false;
         }
+
         if (code == KeyEvent.VK_DOWN) {
             down = true;
-            down();
+            if (Mapa[iAux + 1][jAux] != 'X') {
+                down();
+                aux = code;
+            } else {
+                if (aux == 38) {
+                    up();
+                    up = true;
+                } else {
+                    up = false;
+                }
+                if (aux == 40) {
+                    down();
+                    down = true;
+                } else {
+                    down = false;
+                }
+                if (aux == 37) {
+                    left();
+                    System.out.println("izquieda");
+                    left = true;
+                } else {
+                    left = false;
+                }
+                if (aux == 39) {
+                    right();
+                    System.out.println("derecha");
+                    right = true;
+                } else {
+                    right = false;
+                }
+            }
         } else {
             down = false;
         }
         if (code == KeyEvent.VK_RIGHT) {
+            aux = code;
             right = true;
             right();
         } else {
             right = false;
         }
         if (code == KeyEvent.VK_LEFT) {
+            aux = code;
             left = true;
             left();
         } else {
@@ -239,6 +288,31 @@ public class second extends JPanel implements ActionListener, KeyListener {
         }
         if (code == KeyEvent.VK_SPACE) {
             gameStatus = 1;//lo envía al primer nivel
+            //para que el pacman no cambie de dirección si se preciona el espacio
+            if (aux == 38) {
+                up();
+                up = true;
+            } else {
+                up = false;
+            }
+            if (aux == 40) {
+                down();
+                down = true;
+            } else {
+                down = false;
+            }
+            if (aux == 37) {
+                left();
+                left = true;
+            } else {
+                left = false;
+            }
+            if (aux == 39) {
+                right();
+                right = true;
+            } else {
+                right = false;
+            }
         }
     }
 
@@ -249,6 +323,36 @@ public class second extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        MouseX = e.getX();
+        MouseY = e.getY();
+        System.out.println("X " + e.getX());
+        System.out.println("X " + e.getY());
+        g2.setColor(Color.BLUE);
+        g2.fillOval(e.getX(), e.getY(), 5, 5);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 
