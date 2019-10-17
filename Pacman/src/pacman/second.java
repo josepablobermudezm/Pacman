@@ -55,7 +55,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     Timer t = new Timer(5, this);
     double x = 434, y = 392, velx = 0, vely = 0;
     int code = 39/*por default a la derecha*/, cont = 0, gameStatus = 0, MouseX = 0, MouseY = 0,
-            xAux = 434, yAux = 392, jAux = 14, iAux = 14, aux = 0, aux2 = 0, cont1 = 0, cont2 = 0, cont4 = 0, vidas = 3, cont3 = 0, contPuntos = 0, cont5 = 0;
+            xAux = 434, yAux = 392, jAux = 14, iAux = 14, aux = 0, aux2 = 0, cont1 = 0, cont2 = 0, cont4 = 0, vidas = 6, cont3 = 0, contPuntos = 0, cont5 = 0;
     static boolean up = false, down = false, left = false, right = false, value = false, mapa2 = false, Nivel1 = true, Nivel2 = false, Nivel3 = false, Nivel4 = false, Nivel5 = false;
 
     public second() {
@@ -323,7 +323,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g.drawString("Puntos: " + cont * 10, 0, 585);
             for (int i = 0; i < vidas; i++) {
                 g2.setColor(Color.YELLOW);
-                g2.fill(new Arc2D.Double(760 + cont3, 565, 23, 23, 30, 300, Arc2D.PIE));
+                g2.fill(new Arc2D.Double(675 + cont3, 565, 23, 23, 30, 300, Arc2D.PIE));
                 cont3 += 30;
             }
             cont3 = 30;
