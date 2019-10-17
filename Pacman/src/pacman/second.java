@@ -55,9 +55,10 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     Timer t = new Timer(5, this);
     double x = 434, y = 392, velx = 0, vely = 0;
     int code = 39/*por default a la derecha*/, cont = 0, gameStatus = 0, MouseX = 0, MouseY = 0,
-            xAux = 434, yAux = 392, jAux = 14, iAux = 14, aux = 0, aux2 = 0, cont1 = 0, cont2 = 0, cont4 = 0, vidas = 6, cont3 = 0, contPuntos = 0, cont5 = 0;
-    static boolean up = false, down = false, left = false, right = false, value = false, mapa2 = false, Nivel1 = true, Nivel2 = false, Nivel3 = false, Nivel4 = false, Nivel5 = false;
-
+            xAux = 434, yAux = 392, jAux = 14, iAux = 14, aux = 0, aux2 = 0, cont1 = 0, cont2 = 0, cont4 = 0, vidas = 6, cont3 = 0, contPuntos = 0, cont5 = 0, cont6 = 0;
+    static boolean up = false, down = false, left = false, right = false, value = false, mapa2 = false, Nivel1 = true, Nivel2 = false, Nivel3 = false, Nivel4 = false,
+            Nivel5 = false, Nivel6 = false;
+    String nivel = "Nivel 1";
     public second() {
         //inicializa los listener
         t.start();
@@ -176,6 +177,28 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
             {'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X'},
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
+    
+    char Mapa6[][]
+            = {{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+            {'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X'},
+            {'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+            {'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X'},
+            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X'},
+            {'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X'},
+            {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+            {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
 
     //Los asteriscos son para que no aparezcan puntos dentro de la casa de los fantasmas
     public void paintComponent(Graphics g) {
@@ -233,6 +256,25 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                 //System.out.print("\n");
             }
 
+            if (contPuntos == 0 && Nivel5) {
+                if (cont6 == 0) {
+                    xAux = 434;
+                    yAux = 392;
+                    jAux = 14;
+                    iAux = 14;
+                    x = 434;
+                    y = 392;
+                    cont6++;
+                }
+                for (int i = 0; i < 20; i++) {
+                    for (int j = 0; j < 29; j++) {
+                        Mapa[i][j] = Mapa6[i][j];
+                        Nivel5 = false;
+                        Nivel6 = true;
+                    }
+                }
+                nivel = "Nivel 6";
+            }
             if (contPuntos == 0 && Nivel4) {
                 if (cont5 == 0) {
                     xAux = 434;
@@ -250,7 +292,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         Nivel5 = true;
                     }
                 }
-                System.out.println("Nivel 5");
+                nivel = "Nivel 5";
             }
             
             if (contPuntos == 0 && Nivel3) {
@@ -270,7 +312,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         Nivel4 = true;
                     }
                 }
-                System.out.println("Nivel 4");
+                nivel = "Nivel 4";
             }
 
             if (contPuntos == 0 && Nivel2) {
@@ -290,7 +332,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         }
                     }
                 }
-                System.out.println("Nivel 3");
+                nivel = "Nivel 3";
             }
 
             if (contPuntos == 0 && Nivel1) {
@@ -310,7 +352,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         }
                     }
                 }
-                System.out.println("Nivel 2");
+                nivel = "Nivel 2";
             }
 
             int x = (int) MouseX;
@@ -320,6 +362,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             //System.out.println();
             g.setFont(new Font("Showcard Gothic", 1, 20));
             g.setColor(Color.WHITE);
+            g.drawString(nivel, 400, 585);
             g.drawString("Puntos: " + cont * 10, 0, 585);
             for (int i = 0; i < vidas; i++) {
                 g2.setColor(Color.YELLOW);
