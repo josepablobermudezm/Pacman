@@ -54,18 +54,8 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     Timer t = new Timer(5, this);
     double x = 434, y = 392, velx = 0, vely = 0;
-    int code = 39;//por default a la derecha
-    int cont = 0;
-    int gameStatus = 0;
-    int xAux = 434;
-    int yAux = 392;
-    int jAux = 14;
-    int iAux = 14;
-    int aux = 0;
-    int aux2 = 0;
-    int MouseX = 0;
-    int MouseY = 0;
-    int cont1 = 0;
+    int code = 39/*por default a la derecha*/, cont = 0, gameStatus = 0, MouseX = 0, MouseY = 0,
+            xAux = 434, yAux = 392, jAux = 14, iAux = 14, aux = 0, aux2 = 0, cont1 = 0, vidas = 3, cont3 = 0;
     static boolean up = false, down = false, left = false, right = false, value = false;
 
     public second() {
@@ -157,7 +147,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             }
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
-                    if (Mapa[i][j] == 'X' ) {//pared
+                    if (Mapa[i][j] == 'X') {//pared
                         //System.out.print("X");
                         g2.setColor(new Color(46, 55, 130));
                         g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
@@ -176,8 +166,8 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         //System.out.print("X");
                         g2.setColor(Color.black);
                         g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                        g2.setColor(new Color(209,209,209));
-                        g2.fillRect(j * 31, i * 28+10, 31, 4);
+                        g2.setColor(new Color(209, 209, 209));
+                        g2.fillRect(j * 31, i * 28 + 10, 31, 4);
                     }
 
                 }
@@ -191,6 +181,12 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g.setFont(new Font("Showcard Gothic", 1, 20));
             g.setColor(Color.WHITE);
             g.drawString("Puntos: " + cont * 10, 0, 585);
+            for (int i = 0; i < vidas; i++) {
+                g2.setColor(Color.YELLOW);
+                g2.fill(new Arc2D.Double(760+cont3, 565, 23, 23, 30,300 ,Arc2D.PIE));
+                cont3+=30;
+            }
+            cont3 = 30;
         }
     }
 
