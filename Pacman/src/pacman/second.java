@@ -65,18 +65,18 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     int aux2 = 0;
     int MouseX = 0;
     int MouseY = 0;
-    boolean up = false, down = false, left = false, right = false;
+    int cont1 = 0;
+    static boolean up = false, down = false, left = false, right = false, value = false;
 
     public second() {
         //inicializa los listener
-
         t.start();
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        addMouseListener(this); 
+        addMouseListener(this);
     }
-
+    //matriz de char, mapa, sobre esto se cargan todos los mapas
     char Mapa[][]
             = {{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
@@ -87,7 +87,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' '},
+            {'*', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', '*'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
@@ -98,6 +98,28 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             {'X', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
+    //vector de char, para cambiar un nivel lo que se hace es cargar este vector sobre la matriz ya existente
+    char Mapa2[]
+            = {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X',
+                'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X',
+                'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                '*', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', '*', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', '*',
+                'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X',
+                'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X',
+                'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', '*', '*', '*', '*', '*', '*', '*', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X',
+                'X', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '@', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', 'X', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', 'X', ' ', 'X',
+                'X', ' ', ' ', ' ', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', ' ', ' ', ' ', 'X',
+                'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'};
 
     //Los asteriscos son para que no aparezcan puntos dentro de la casa de los fantasmas
     public void paintComponent(Graphics g) {
@@ -117,6 +139,22 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g2.setColor(Color.BLACK);
             g2.fill(new Rectangle(0, 0, 900, 645));//fondo
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
+            if (cont == 211) {
+                xAux = 434;
+                yAux = 392;
+                jAux = 14;
+                iAux = 14;
+                x = 434; 
+                y = 392;
+                up = false; down = false; left = false; right = false; value = false;
+                for (int i = 0; i < 20; i++) {
+                    for (int j = 0; j < 29; j++) {
+                        Mapa[i][j] = Mapa2[cont1];
+                        cont1++;
+                    }
+                }
+                cont1 = 0;
+            }
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
                     if (Mapa[i][j] == 'X') {//pared
@@ -134,10 +172,10 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                         //Aquí están los puntos para comerse, hay que ver como acomodarlos,
                         //System.out.print(" ");
                     }
+
                 }
                 //System.out.print("\n");
             }
-
             int x = (int) MouseX;
             int y = (int) MouseY;
             g2.fillOval(MouseX, MouseY, 5, 5);
@@ -151,6 +189,22 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     public void actionPerformed(ActionEvent e) {
         repaint();
+        //Si pasa por la parte izquierda infinita entonces lo envío al lado derecho
+        if (jAux == 0 && iAux == 9 && code == 37) {
+            Mapa[iAux][jAux] = '*';
+            jAux = 27;
+            x = 837;
+            xAux = 837;
+            Mapa[iAux][jAux] = '@';
+        }
+        //Si pasa por la parte derecha infinita entonces lo envío al lado izquierdo
+        if (jAux == 28 && iAux == 9 && code == 39) {
+            Mapa[iAux][jAux] = '*';
+            jAux = 1;
+            x = 31;
+            xAux = 31;
+            Mapa[iAux][jAux] = '@';
+        }
         //reviza que si hay un campo al frente, atras, derecha o a la izquierda y ese campo es X, osea una pared. En el caso que pase eso y no se este yendo en 
         //esa dirección aumenta sin ningún problema
         if ((Mapa[iAux][jAux + 1] != 'X' && right) || (Mapa[iAux][jAux - 1] != 'X' && left) || (Mapa[iAux + 1][jAux] != 'X' && down) || (Mapa[iAux - 1][jAux] != 'X' && up)) {
@@ -161,7 +215,6 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
         }
         //iAux y jAux, empiezan en 14, que es la posición del pacman en la matriz,
         //la resta y suma de 31 y 28 y por el tamaño de los rectangulos en el mapa
-
         //Si la posición del pacman es 31/28 pixeles(un rectangulo) menos/mas que la posición que tenía anterior lo muevo en la matriz, después actualizo la posición
         if (x == xAux - 31) {
             if (Mapa[iAux][jAux - 1] == ' ') {//cont sería la suma de los puntos totales, en el caso que sea un espacio en blanco quiere decir que nunca se ha pasado por ahí
@@ -199,6 +252,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             iAux++;
             yAux = yAux + 28;
         }
+
     }
 
     ///La velocidad a la que se mueve el pacman por cada "frame"
@@ -224,6 +278,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //System.out.println(value);
         code = e.getKeyCode();
         if (code == KeyEvent.VK_UP) {
             aux = code;
@@ -315,12 +370,12 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-       
+
     }
 
     @Override
@@ -333,23 +388,22 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-       
-    }
 
+    }
 
 }
