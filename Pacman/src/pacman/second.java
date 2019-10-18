@@ -412,7 +412,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     cont10++;
                     for (int i = 0; i < 20; i++) {
                         for (int j = 0; j < 29; j++) {
-                            Mapa[i][j] = Mapa9[i][j];
+                            Mapa[i][j] = Mapa10[i][j];
                             Nivel9 = false;
                             Nivel10 = true;
                         }
