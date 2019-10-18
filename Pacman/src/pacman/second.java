@@ -310,6 +310,9 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                 Mapa[i][j] = Mapa3[i][j];
             }
         }*/
+        Point p = MouseInfo.getPointerInfo().getLocation();//posición del mouse
+        int x1 = p.x;
+        int y1 = p.y;
         super.paintComponent(g);
         //GameStatus es como para saber en que pantalla se está
         if (gameStatus == 0) {//gameStatus = 0 significa que se está en la pantalla del menú
@@ -317,42 +320,39 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             String dir = f.getAbsolutePath();
             ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
             i.paintIcon(this, g, 0, 0);
-            Point p = MouseInfo.getPointerInfo().getLocation();//posición del mouse
-            int x1 = p.x;
-            int y1 = p.y;
             //para simular el hover
-            if(x1>=5 && x1<=100 && y1 >= 450 && y1 <=486){
+            if (x1 >= 5 && x1 <= 100 && y1 >= 450 && y1 <= 486) {
                 g.setFont(new Font("Arial", 1, 32));
                 g.setColor(Color.white);
                 g.drawString("Iniciar", 5, 450);
-            }else{
+            } else {
                 g.setFont(new Font("Arial", 1, 30));
                 g.setColor(Color.GRAY);
                 g.drawString("Iniciar", 5, 450);
             }
-            if(x1>=5 && x1<=145 && y1 >= 501 && y1 <=532){
+            if (x1 >= 5 && x1 <= 145 && y1 >= 501 && y1 <= 532) {
                 g.setFont(new Font("Arial", 1, 32));
                 g.setColor(Color.white);
                 g.drawString("Jugardor", 5, 490);
-            }else{
+            } else {
                 g.setFont(new Font("Arial", 1, 30));
                 g.setColor(Color.GRAY);
-                g.drawString("Jugardor", 5, 490);
+                g.drawString("Jugador", 5, 490);
             }
-            if(x1>=5 && x1<=215 && y1 >= 543 && y1 <=570){
+            if (x1 >= 5 && x1 <= 215 && y1 >= 543 && y1 <= 570) {
                 g.setFont(new Font("Arial", 1, 32));
                 g.setColor(Color.white);
                 g.drawString("Configuración", 5, 530);
-            }else{
+            } else {
                 g.setFont(new Font("Arial", 1, 30));
                 g.setColor(Color.GRAY);
                 g.drawString("Configuración", 5, 530);
             }
-            if(x1>=5 && x1<=85 && y1 >= 585 && y1 <=610){
+            if (x1 >= 5 && x1 <= 85 && y1 >= 585 && y1 <= 610) {
                 g.setFont(new Font("Arial", 1, 32));
                 g.setColor(Color.white);
                 g.drawString("Salir", 5, 570);
-            }else{
+            } else {
                 g.setFont(new Font("Arial", 1, 30));
                 g.setColor(Color.GRAY);
                 g.drawString("Salir", 5, 570);
@@ -364,8 +364,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     }
                 }
             });*/
-        }
-        else if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
+        } else if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
             Graphics2D g2 = (Graphics2D) g;
 
             g2.setColor(Color.BLACK);
@@ -646,7 +645,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                 cont3 += 30;
             }
             cont3 = 30;
-        }else if(gameStatus == 2){//MENU DE JUGADOR
+        } else if (gameStatus == 2) {//MENU DE JUGADOR
             File f = new File(".");
             String dir = f.getAbsolutePath();
             ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
@@ -654,7 +653,16 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g.setFont(new Font("Arial", 1, 30));
             g.setColor(Color.WHITE);
             g.drawString("Jugador", 400, 50);
-        }else if(gameStatus == 3){
+            if (x1 >= 5 && x1 <= 85 && y1 >= 585 && y1 <= 610) {
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Volver", 5, 570);
+            } else {
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Volver", 5, 570);
+            }
+        } else if (gameStatus == 3) {
             File f = new File(".");
             String dir = f.getAbsolutePath();
             ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
@@ -662,7 +670,16 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g.setFont(new Font("Arial", 1, 30));
             g.setColor(Color.WHITE);
             g.drawString("Configuraciones", 400, 50);
-        }else if(gameStatus == 4){
+            if (x1 >= 5 && x1 <= 85 && y1 >= 585 && y1 <= 610) {
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Volver", 5, 570);
+            } else {
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Volver", 5, 570);
+            }
+        } else if (gameStatus == 4) {
             System.exit(0);
         }
     }
@@ -862,19 +879,22 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     public void mouseClicked(MouseEvent e) {
         MouseX = e.getX();
         MouseY = e.getY();
-        System.out.println(MouseX +" X");
+        System.out.println(MouseX + " X");
         System.out.println(MouseY + " Y");
-        if(e.getX()>=5 && e.getX()<=100 && e.getY() >= 425 && e.getY() <= 448 ){
+        if (e.getX() >= 5 && e.getX() <= 100 && e.getY() >= 425 && e.getY() <= 448 && gameStatus == 0) {
             gameStatus = 1;
         }
-        if(e.getX()>=5 && e.getX()<=135 && e.getY() >= 465 && e.getY() <= 491 ){
+        if (e.getX() >= 5 && e.getX() <= 135 && e.getY() >= 465 && e.getY() <= 491 && gameStatus == 0) {
             gameStatus = 2;
         }
-        if(e.getX()>=5 && e.getX()<=203 && e.getY() >= 506 && e.getY() <= 528 ){
+        if (e.getX() >= 5 && e.getX() <= 203 && e.getY() >= 506 && e.getY() <= 528 && gameStatus == 0) {
             gameStatus = 3;
         }
-        if(e.getX()>=5 && e.getX()<=73 && e.getY() >= 550 && e.getY() <= 572 ){
+        if (e.getX() >= 5 && e.getX() <= 73 && e.getY() >= 550 && e.getY() <= 572 && gameStatus == 0) {
             gameStatus = 4;
+        }
+        if (e.getX() >= 5 && e.getX() <= 73 && e.getY() >= 550 && e.getY() <= 572 && (gameStatus == 2 || gameStatus == 3) ) {
+            gameStatus = 0;
         }
     }
 
