@@ -6,14 +6,21 @@
 package pacman;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Jose Pablo Bermudez
  */
 public class Nodo{
+    private final List <Arista> aristas_Adyacentes = new ArrayList<>();
+    private final List <Nodo> nodos_Adyacentes = new ArrayList<>();
     
-    Point2D point2D = new Point2D() {
+    public Nodo() {
+    }
+    
+    private Point2D point2D = new Point2D() {
         
         double x;
         double y;
@@ -34,10 +41,30 @@ public class Nodo{
             this.y = y;
         }
     };
-    
-    
 
+    Nodo(Double posx, Double posy) {
+        point2D.setLocation(posx, posy);
+    }
+
+    public Point2D getPoint2D() {
+        return point2D;
+    }
+
+    public void setPoint2D(Point2D point2D) {
+        this.point2D = point2D;
+    }
+    
     public void distancia() {
         this.point2D.distance(point2D);
     }
+
+    public List<Arista> getAristas_Adyacentes() {
+        return aristas_Adyacentes;
+    }
+
+    public List<Nodo> getNodos_Adyacentes() {
+        return nodos_Adyacentes;
+    }
+    
+    
 }

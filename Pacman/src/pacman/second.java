@@ -41,8 +41,12 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -60,6 +64,9 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     static boolean up = false, down = false, left = false, right = false, value = false, mapa2 = false, Nivel1 = true, Nivel2 = false, Nivel3 = false, Nivel4 = false,
             Nivel5 = false, Nivel6 = false, Nivel7 = false, Nivel8 = false, Nivel9 = false;
     String nivel = "Nivel 1";
+
+    private ArrayList<Nodo> nodos = new ArrayList();
+    private ArrayList<Arista> aristas = new ArrayList();
 
     public second() {
         //inicializa los listener
@@ -245,7 +252,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             {'X', ' ', 'X', 'X', 'X', ' ', 'X', ' ', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X', 'X', 'X', ' ', 'X', 'X', ' ', 'X', ' ', 'X', 'X', 'X', ' ', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
-    
+
     char Mapa9[][]
             = {{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
@@ -288,6 +295,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
         }
         if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
             Graphics2D g2 = (Graphics2D) g;
+
             g2.setColor(Color.BLACK);
             g2.fill(new Rectangle(0, 0, 900, 645));//fondo
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
@@ -302,7 +310,10 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     } else if (Mapa[i][j] == '@') {//pacman
                         //System.out.print("@");
                         g2.setColor(Color.YELLOW);
-                        g2.fill(new Arc2D.Double(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE));
+
+                        pacMan2D pacMan = new pacMan2D(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE);
+
+                        g2.fill(pacMan.getpMan());
                         //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
                     } else if (Mapa[i][j] == ' ') {//espacio en blanco
                         g2.setColor(Color.YELLOW);
@@ -322,6 +333,50 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     }
                 }
                 //System.out.print("\n");
+            }
+            try {
+
+                BufferedReader reader = new BufferedReader(new FileReader("src/resources/Nodos.txt"));
+                String line = null;
+                Integer i = 0;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts;
+                    parts = line.split("\\$");
+                    Double posx = Double.valueOf(parts[0]);
+                    Double posy = Double.valueOf(parts[1]);
+
+                    Nodo nod = new Nodo(posx, posy);
+                    g2.setColor(Color.RED);
+                    g2.fillOval((int) nod.getPoint2D().getX(), (int) nod.getPoint2D().getY(), 4, 4);
+                    //nod.setPuntoMapa(new Point2D(posx, posy));
+                    i++;
+                    nodos.add(nod);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(second.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader("src/resources/Arista.txt"));
+                String line = null;
+
+                while ((line = reader.readLine()) != null) {
+                    String[] parts;
+                    parts = line.split("\\$");
+                    Double posx = Double.valueOf(parts[0]);
+                    Double posy = Double.valueOf(parts[1]);
+                    Double posx2 = Double.valueOf(parts[2]);
+                    Double posy2 = Double.valueOf(parts[3]);
+
+                    Arista arista = new Arista(posx, posy, posx2, posy2);
+                    // System.out.println(posx+" "+posy+" "+posx2+" "+posy2);
+                    g2.setColor(Color.red);
+                    g2.setStroke(new BasicStroke(3.0f));
+                    g2.drawLine(posx2.intValue(), posy2.intValue(), posx.intValue(), posy.intValue());
+
+                    //arista.agregarNodos(destinos);
+                    aristas.add(arista);
+                };
+            } catch (Exception e) {
             }
 
             if (contPuntos == 0 && Nivel8) {
@@ -343,7 +398,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     nivel = "Nivel 9";
                 }
             }
-            
+
             if (contPuntos == 0 && Nivel7) {
                 if (cont8 == 0) {
                     xAux = 434;
