@@ -299,52 +299,52 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g2.setColor(Color.BLACK);
             g2.fill(new Rectangle(0, 0, 900, 645));//fondo
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
+            if (Nivel1) {
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader("src/resources/Nodos.txt"));
+                    String line = null;
+                    Integer i = 0;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts;
+                        parts = line.split("\\$");
+                        Double posx = Double.valueOf(parts[0]);
+                        Double posy = Double.valueOf(parts[1]);
 
-            try {
-
-                BufferedReader reader = new BufferedReader(new FileReader("src/resources/Nodos.txt"));
-                String line = null;
-                Integer i = 0;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts;
-                    parts = line.split("\\$");
-                    Double posx = Double.valueOf(parts[0]);
-                    Double posy = Double.valueOf(parts[1]);
-
-                    Nodo nod = new Nodo(posx, posy);
-                    g2.setColor(Color.RED);
-                    g2.fillOval((int) nod.getPoint2D().getX(), (int) nod.getPoint2D().getY(), 4, 4);
-                    //nod.setPuntoMapa(new Point2D(posx, posy));
-                    i++;
-                    nodos.add(nod);
+                        Nodo nod = new Nodo(posx, posy);
+                        g2.setColor(Color.RED);
+                        g2.fillOval((int) nod.getPoint2D().getX(), (int) nod.getPoint2D().getY(), 4, 4);
+                        //nod.setPuntoMapa(new Point2D(posx, posy));
+                        i++;
+                        nodos.add(nod);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(second.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(second.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader("src/resources/Arista.txt"));
+                    String line = null;
+
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts;
+                        parts = line.split("\\$");
+                        Double posx = Double.valueOf(parts[0]);
+                        Double posy = Double.valueOf(parts[1]);
+                        Double posx2 = Double.valueOf(parts[2]);
+                        Double posy2 = Double.valueOf(parts[3]);
+
+                        Arista arista = new Arista(posx, posy, posx2, posy2);
+                        // System.out.println(posx+" "+posy+" "+posx2+" "+posy2);
+                        g2.setColor(Color.red);
+                        g2.setStroke(new BasicStroke(3.0f));
+                        g2.drawLine(posx2.intValue(), posy2.intValue(), posx.intValue(), posy.intValue());
+
+                        //arista.agregarNodos(destinos);
+                        aristas.add(arista);
+                    };
+                } catch (Exception e) {
+                }
             }
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader("src/resources/Arista.txt"));
-                String line = null;
 
-                while ((line = reader.readLine()) != null) {
-                    String[] parts;
-                    parts = line.split("\\$");
-                    Double posx = Double.valueOf(parts[0]);
-                    Double posy = Double.valueOf(parts[1]);
-                    Double posx2 = Double.valueOf(parts[2]);
-                    Double posy2 = Double.valueOf(parts[3]);
-
-                    Arista arista = new Arista(posx, posy, posx2, posy2);
-                    // System.out.println(posx+" "+posy+" "+posx2+" "+posy2);
-                    g2.setColor(Color.red);
-                    g2.setStroke(new BasicStroke(3.0f));
-                    g2.drawLine(posx2.intValue(), posy2.intValue(), posx.intValue(), posy.intValue());
-
-                    //arista.agregarNodos(destinos);
-                    aristas.add(arista);
-                };
-            } catch (Exception e) {
-            }
-            
             contPuntos = 0;
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 29; j++) {
