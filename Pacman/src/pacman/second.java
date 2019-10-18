@@ -835,10 +835,13 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
         } else {
             left = false;
         }
-        if (code == KeyEvent.VK_SPACE) {
-            gameStatus = 1;//lo envía al primer nivel
+        if (code == 27) {
+            gameStatus = 0;//lo envía al primer nivel
             //para que el pacman no cambie de dirección si se preciona el espacio
-            if (aux == 38) {
+            
+        }
+        //lógica para problema de movimiento
+        /*if (aux == 38) {
                 up();
                 up = true;
             } else {
@@ -861,8 +864,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                 right = true;
             } else {
                 right = false;
-            }
-        }
+            }*/
     }
 
     @Override
