@@ -300,40 +300,6 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             g2.fill(new Rectangle(0, 0, 900, 645));//fondo
             //los System.out.print son para imprimir la matriz lógica, de hecho no está funcionando por el cambio de los puntos
 
-            contPuntos = 0;
-            for (int i = 0; i < 20; i++) {
-                for (int j = 0; j < 29; j++) {
-                    if (Mapa[i][j] == 'X') {//pared
-                        //System.out.print("X");
-                        g2.setColor(new Color(46, 55, 130));
-                        g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                    } else if (Mapa[i][j] == '@') {//pacman
-                        //System.out.print("@");
-                        g2.setColor(Color.YELLOW);
-
-                        pacMan2D pacMan = new pacMan2D(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE);
-
-                        g2.fill(pacMan.getpMan());
-                        //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
-                    } else if (Mapa[i][j] == ' ') {//espacio en blanco
-                        g2.setColor(Color.YELLOW);
-                        g2.fillOval(j * 31 + 10, i * 29 + 5, 4, 4);
-                        //Aquí están los puntos para comerse, hay que ver como acomodarlos,
-                        //System.out.print(" ");
-                    }
-                    if (Mapa[i][j] == 'X' && i == 9 && j == 14) {//pared
-                        //System.out.print("X");
-                        g2.setColor(Color.black);
-                        g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
-                        g2.setColor(new Color(209, 209, 209));
-                        g2.fillRect(j * 31, i * 28 + 10, 31, 4);
-                    }
-                    if (Mapa[i][j] == ' ') {
-                        contPuntos++;
-                    }
-                }
-                //System.out.print("\n");
-            }
             try {
 
                 BufferedReader reader = new BufferedReader(new FileReader("src/resources/Nodos.txt"));
@@ -377,6 +343,41 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     aristas.add(arista);
                 };
             } catch (Exception e) {
+            }
+            
+            contPuntos = 0;
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 29; j++) {
+                    if (Mapa[i][j] == 'X') {//pared
+                        //System.out.print("X");
+                        g2.setColor(new Color(46, 55, 130));
+                        g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
+                    } else if (Mapa[i][j] == '@') {//pacman
+                        //System.out.print("@");
+                        g2.setColor(Color.YELLOW);
+
+                        pacMan2D pacMan = new pacMan2D(x, y, 23, 23, (aux == 39) ? 30 : (aux == 37) ? 210 : (aux == 38) ? 120 : 300, 300, Arc2D.PIE);
+
+                        g2.fill(pacMan.getpMan());
+                        //x, y son las posiciones del pacman, van a ir cambiando dependiendo de que tecla se use
+                    } else if (Mapa[i][j] == ' ') {//espacio en blanco
+                        g2.setColor(Color.YELLOW);
+                        g2.fillOval(j * 31 + 10, i * 29 + 5, 4, 4);
+                        //Aquí están los puntos para comerse, hay que ver como acomodarlos,
+                        //System.out.print(" ");
+                    }
+                    if (Mapa[i][j] == 'X' && i == 9 && j == 14) {//pared
+                        //System.out.print("X");
+                        g2.setColor(Color.black);
+                        g2.fillRect(j * 31, i * 28, 31, 28);//tamaño y posición del cada uno de los rectangulos
+                        g2.setColor(new Color(209, 209, 209));
+                        g2.fillRect(j * 31, i * 28 + 10, 31, 4);
+                    }
+                    if (Mapa[i][j] == ' ') {
+                        contPuntos++;
+                    }
+                }
+                //System.out.print("\n");
             }
 
             if (contPuntos == 0 && Nivel8) {
