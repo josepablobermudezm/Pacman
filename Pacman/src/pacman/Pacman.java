@@ -21,5 +21,4 @@ public class Pacman {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(900, 645);
     }
-    
 }

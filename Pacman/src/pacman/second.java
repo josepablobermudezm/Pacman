@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.BasicStroke;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,8 +29,12 @@ import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Label;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -64,17 +69,19 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     static boolean up = false, down = false, left = false, right = false, value = false, mapa2 = false, Nivel1 = true, Nivel2 = false, Nivel3 = false, Nivel4 = false,
             Nivel5 = false, Nivel6 = false, Nivel7 = false, Nivel8 = false, Nivel9 = false, Nivel10 = false;
     String nivel = "Nivel 1";
-
     private ArrayList<Nodo> nodos = new ArrayList();
     private ArrayList<Arista> aristas = new ArrayList();
+    JButton button = new JButton();
 
     public second() {
         //inicializa los listener
+
         t.start();
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addMouseListener(this);
+        button.setText("hola");
     }
     //matriz de char, mapa, sobre esto se cargan todos los mapas
     char Mapa[][]
@@ -310,11 +317,55 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
             String dir = f.getAbsolutePath();
             ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
             i.paintIcon(this, g, 0, 0);
-            g.setFont(new Font("Arial", 1, 40));
-            g.setColor(Color.WHITE);
-            g.drawString("Presione espacio para continuar", 170, 590);
+            Point p = MouseInfo.getPointerInfo().getLocation();//posición del mouse
+            int x1 = p.x;
+            int y1 = p.y;
+            //para simular el hover
+            if(x1>=5 && x1<=100 && y1 >= 450 && y1 <=486){
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Iniciar", 5, 450);
+            }else{
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Iniciar", 5, 450);
+            }
+            if(x1>=5 && x1<=145 && y1 >= 501 && y1 <=532){
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Jugardor", 5, 490);
+            }else{
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Jugardor", 5, 490);
+            }
+            if(x1>=5 && x1<=215 && y1 >= 543 && y1 <=570){
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Configuración", 5, 530);
+            }else{
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Configuración", 5, 530);
+            }
+            if(x1>=5 && x1<=85 && y1 >= 585 && y1 <=610){
+                g.setFont(new Font("Arial", 1, 32));
+                g.setColor(Color.white);
+                g.drawString("Salir", 5, 570);
+            }else{
+                g.setFont(new Font("Arial", 1, 30));
+                g.setColor(Color.GRAY);
+                g.drawString("Salir", 5, 570);
+            }
+            /*label.addMouseListener(new MouseAdapter() {
+                public void mouseReleased(MouseEvent e) {
+                    if (e.isPopupTrigger()) {
+                        gameStatus = 1;
+                    }
+                }
+            });*/
         }
-        if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
+        else if (gameStatus == 1) {//gameStatus = 1 significa que está en el nivel 1
             Graphics2D g2 = (Graphics2D) g;
 
             g2.setColor(Color.BLACK);
@@ -420,7 +471,7 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                     nivel = "Nivel 10";
                 }
             }
-            
+
             if (contPuntos == 0 && Nivel8) {
                 if (cont9 == 0) {
                     xAux = 434;
@@ -595,6 +646,24 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
                 cont3 += 30;
             }
             cont3 = 30;
+        }else if(gameStatus == 2){//MENU DE JUGADOR
+            File f = new File(".");
+            String dir = f.getAbsolutePath();
+            ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
+            i.paintIcon(this, g, 0, 0);
+            g.setFont(new Font("Arial", 1, 30));
+            g.setColor(Color.WHITE);
+            g.drawString("Jugador", 400, 50);
+        }else if(gameStatus == 3){
+            File f = new File(".");
+            String dir = f.getAbsolutePath();
+            ImageIcon i = new ImageIcon(dir + "\\src\\resources\\fondo3.jpg");
+            i.paintIcon(this, g, 0, 0);
+            g.setFont(new Font("Arial", 1, 30));
+            g.setColor(Color.WHITE);
+            g.drawString("Configuraciones", 400, 50);
+        }else if(gameStatus == 4){
+            System.exit(0);
         }
     }
 
@@ -793,8 +862,20 @@ public class second extends JPanel implements ActionListener, KeyListener, Mouse
     public void mouseClicked(MouseEvent e) {
         MouseX = e.getX();
         MouseY = e.getY();
-        System.out.println("X " + e.getX());
-        System.out.println("Y " + e.getY());
+        System.out.println(MouseX +" X");
+        System.out.println(MouseY + " Y");
+        if(e.getX()>=5 && e.getX()<=100 && e.getY() >= 425 && e.getY() <= 448 ){
+            gameStatus = 1;
+        }
+        if(e.getX()>=5 && e.getX()<=135 && e.getY() >= 465 && e.getY() <= 491 ){
+            gameStatus = 2;
+        }
+        if(e.getX()>=5 && e.getX()<=203 && e.getY() >= 506 && e.getY() <= 528 ){
+            gameStatus = 3;
+        }
+        if(e.getX()>=5 && e.getX()<=73 && e.getY() >= 550 && e.getY() <= 572 ){
+            gameStatus = 4;
+        }
     }
 
     @Override
